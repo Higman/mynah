@@ -1,4 +1,4 @@
-package jp.ac.kagawalab.mynah;
+package jp.ac.kagawalab.mynah.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

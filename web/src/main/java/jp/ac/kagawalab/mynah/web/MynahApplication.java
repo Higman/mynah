@@ -1,4 +1,4 @@
-package jp.ac.kagawalab.mynah;
+package jp.ac.kagawalab.mynah.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

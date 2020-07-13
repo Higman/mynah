@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+}
+
+group 'jp.ac.kagawalab'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
