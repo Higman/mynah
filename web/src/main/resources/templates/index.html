@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="~{layout/navi}">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" defer ></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
 </head>
-<body>
-<a href="/login">login</a>
+    <div layout:fragment="contents">
+        <p th:text="${#authentication.getAuthorities()}"></p>
+        <p></p>
+        <div sec:authorize="hasAuthority('ROLE_ADMIN')">ADMIN</div>
+        <div sec:authorize="hasAuthority('ROLE_USER')">USER</div>
+        <a href="/login">login</a>
+    </div>
 </body>
 </html>

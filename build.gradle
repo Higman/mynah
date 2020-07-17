@@ -6,10 +6,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
     }
 }
 apply plugin: 'idea'
+
 allprojects {
     apply plugin: 'java'
 
@@ -33,21 +34,34 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
     }
+
+    /** spring boot周りの依存関係を解決する
+     * ref: https://qiita.com/opengl-8080/items/6409669dc3f8b8071af4
+     */
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+        }
+    }
 }
 
 project(':web') {
+    apply plugin: 'org.springframework.boot'
+
     dependencies {
+        implementation project(':core')
+
         implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
         implementation 'org.springframework.boot:spring-boot-starter-security'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.session:spring-session-core'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
         runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -56,8 +70,11 @@ project(':web') {
         }
         testImplementation 'org.springframework.security:spring-security-test'
 
+        runtimeOnly 'org.postgresql:postgresql'
+
         // thymeleaf
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
         implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
     }
 }
@@ -65,7 +82,10 @@ project(':web') {
 project(':core') {
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        runtimeOnly 'org.postgresql:postgresql'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+        implementation 'org.springframework.security:spring-security-oauth2-core'
+        implementation 'org.modelmapper:modelmapper:latest.release'
     }
 }
 
