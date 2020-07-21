@@ -2,6 +2,7 @@ package jp.ac.kagawalab.mynah.web.security;
 
 import jp.ac.kagawalab.mynah.core.oauth2.service.MynahOAuth2UserService;
 import jp.ac.kagawalab.mynah.core.oauth2.service.MynahOidcUserService;
+import jp.ac.kagawalab.mynah.core.oauth2.service.OAuth2UserUtil;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
 import jp.ac.kagawalab.mynah.web.mapper.UserAuthoritiesMapper;
 import org.springframework.context.annotation.Bean;
@@ -10,24 +11,22 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.util.Collection;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
-    private final UserRepository userRepository;
 
-    public WebSecurityConfigurer(UserRepository userRepository) {
+    private final UserRepository userRepository;
+    private final OAuth2UserUtil oAuth2UserUtil;
+
+    public WebSecurityConfigurer(UserRepository userRepository, OAuth2UserUtil oAuth2UserUtil) {
         this.userRepository = userRepository;
+        this.oAuth2UserUtil = oAuth2UserUtil;
     }
 
     @Override
@@ -62,11 +61,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Bean
     public OidcUserService oidcUserService() {
-        return new MynahOidcUserService(userRepository);
+        return new MynahOidcUserService(userRepository, oAuth2UserUtil);
     }
 
     @Bean
     public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
-        return new MynahOAuth2UserService(userRepository);
+        return new MynahOAuth2UserService(userRepository, oAuth2UserUtil);
     }
+
 }

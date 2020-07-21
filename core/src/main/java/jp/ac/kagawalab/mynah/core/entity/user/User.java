@@ -1,6 +1,9 @@
 package jp.ac.kagawalab.mynah.core.entity.user;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -22,10 +25,15 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(unique = true)
+    private String userId;
+
+    @Column(name = "is_oauth2_user", columnDefinition = "boolean DEFAULT true")
+    private boolean isOAuth2User;
+
     private String provider;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String providerId;
 
     @ManyToOne
@@ -33,6 +41,6 @@ public class User implements Serializable {
     private Role role;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", columnDefinition = "timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", insertable = false, updatable = false, columnDefinition = "timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Calendar createdAt;
 }

@@ -5,13 +5,13 @@ import jp.ac.kagawalab.mynah.core.entity.user.Role;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 
-class RoleConverterToDto implements Converter<Role, RoleDto> {
+class RoleToRoleDto implements Converter<Role, RoleDto> {
     @Override
     public RoleDto convert(MappingContext<Role, RoleDto> context) {
         switch (context.getSource().getRole()) {
-            case "admin":
+            case "ROLE_ADMIN":
                 return RoleDto.ROLE_ADMIN;
-            case "user":
+            case "ROLE_USER":
                 return RoleDto.ROLE_USER;
             default:
                 throw new IllegalArgumentException("Role [" + context.getSource() + "] is not exist.");

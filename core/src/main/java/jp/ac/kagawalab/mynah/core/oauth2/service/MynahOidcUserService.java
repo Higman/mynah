@@ -11,19 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Optional;
 
 @ConfigurationProperties(prefix = "oauth2")
 public class MynahOidcUserService extends OidcUserService {
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final OAuth2UserUtil oAuth2UserUtil;
 
     @Setter(onMethod=@__({@Autowired}))
     private MynahModelMapper modelMapper;
@@ -31,8 +27,10 @@ public class MynahOidcUserService extends OidcUserService {
     @Setter
     private String[] targetEmailDomains;
 
-    public MynahOidcUserService(UserRepository userRepository) {
+    @Autowired
+    public MynahOidcUserService(UserRepository userRepository, OAuth2UserUtil oAuth2UserUtil) {
         this.userRepository = userRepository;
+        this.oAuth2UserUtil = oAuth2UserUtil;
     }
 
     @Override
@@ -45,21 +43,21 @@ public class MynahOidcUserService extends OidcUserService {
             throw new IllegalEmailDomainException("", email, targetEmailDomains);
         }
 
+        // 一意キーの取得
+        String providerId = oAuth2UserUtil.getProviderId(userRequest, oidcUser);
         // すでに登録済みのユーザ情報があるか検索
         int userId;
-        RoleDto roleDto = RoleDto.ROLE_USER;
-        Optional<User> existedUser = getExistedUser(oidcUser.getSubject());
+        RoleDto roleDto = null;
+        String provider = userRequest.getClientRegistration().getClientName();
+        Optional<User> existedUser = oAuth2UserUtil.getExistedUser(oidcUser.getSubject());
         if (existedUser.isPresent()) {
             userId = existedUser.get().getId();
             roleDto = modelMapper.getModelMapper().map(existedUser.get().getRole(), RoleDto.class);
         } else {
-            userId = 0;
+            OAuth2UserUtil.RegisterResult result = oAuth2UserUtil.register(provider, providerId);
+            userId = result.getId();
+            roleDto = result.getRoleDto();
         }
-        String clientName = userRequest.getClientRegistration().getClientName();
-        return new MynahOidcUser(userId, clientName, oidcUser.getSubject(), roleDto, oidcUser);
-    }
-
-    private Optional<User> getExistedUser(final String subject) {
-        return Optional.ofNullable(userRepository.findByProviderId(subject));
+        return new MynahOidcUser(userId, provider, providerId, roleDto, oidcUser);
     }
 }

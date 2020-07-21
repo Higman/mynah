@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(scanBasePackages = "jp.ac.kagawalab.mynah")
 @EnableJpaRepositories(basePackages = "jp.ac.kagawalab.mynah.core.repository")
 @EntityScan("jp.ac.kagawalab.mynah.core.entity")
+@ComponentScan("jp.ac.kagawalab.mynah")
 @ConfigurationPropertiesScan("jp.ac.kagawalab.mynah")
 public class MynahApplication {
     public static void main(String[] args) {

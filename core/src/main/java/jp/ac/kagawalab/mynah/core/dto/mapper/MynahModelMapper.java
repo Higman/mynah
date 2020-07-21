@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class MynahModelMapper {
     public ModelMapper getModelMapper() {
         ModelMapper mm = new ModelMapper();
-        mm.addConverter(new RoleConverterToDto());
+        mm.addConverter(new RoleToRoleDto());
         return mm;
     }
 }

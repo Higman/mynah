@@ -16,29 +16,26 @@ import java.util.Optional;
 
 public class MynahOAuth2UserService extends DefaultOAuth2UserService {
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final OAuth2UserUtil oAuth2UserUtil;
 
     @Setter(onMethod=@__({@Autowired}))
     MynahModelMapper modelMapper;
 
-    public MynahOAuth2UserService(UserRepository userRepository) {
+    @Autowired
+    public MynahOAuth2UserService(UserRepository userRepository, OAuth2UserUtil oAuth2UserUtil) {
         this.userRepository = userRepository;
+        this.oAuth2UserUtil = oAuth2UserUtil;
     }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        String subject = "";  // 一意キー
-        switch (userRequest.getClientRegistration().getClientName()) {
-            case "Google":
-                subject = oAuth2User.getAttributes().get("id").toString();
-                break;
-            default: throw new IllegalArgumentException("there is no such identity provider. cannot login by " + userRequest.getClientRegistration().getClientName());
-        }
+        String providerId = oAuth2UserUtil.getProviderId(userRequest, oAuth2User);
         // すでに登録済みのユーザ情報があるか検索
         int userId;
         RoleDto roleDto = RoleDto.ROLE_USER;
-        Optional<User> existedUser = getExistedUser(subject);
+        Optional<User> existedUser = oAuth2UserUtil.getExistedUser(providerId);
         if (existedUser.isPresent()) {
             userId = existedUser.get().getId();
             roleDto = modelMapper.getModelMapper().map(existedUser.get().getRole(), RoleDto.class);
@@ -46,10 +43,6 @@ public class MynahOAuth2UserService extends DefaultOAuth2UserService {
             userId = 0;
         }
         String clientName = userRequest.getClientRegistration().getClientName();
-        return new MynahOAuth2User(userId, clientName, subject, roleDto, oAuth2User);
-    }
-
-    private Optional<User> getExistedUser(String subject) {
-        return Optional.ofNullable(userRepository.findByProviderId(subject));
+        return new MynahOAuth2User(userId, clientName, providerId, roleDto, oAuth2User);
     }
 }

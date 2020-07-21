@@ -37,6 +37,6 @@ public class Recruitment implements Serializable {
     private String detail;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", columnDefinition = "timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", insertable = false, updatable = false, columnDefinition = "timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Calendar createdAt;
 }

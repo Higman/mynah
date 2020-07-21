@@ -16,6 +16,9 @@ spring:
     username: root
     password: root
     initialization-mode: always
+    data:
+      - classpath*:db/init/1_roles.sql
+      - classpath*:db/init/2_users.sql
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
