@@ -23,3 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+function test() {
+    console.log("test");
+}

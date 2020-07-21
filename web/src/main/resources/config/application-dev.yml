@@ -9,7 +9,7 @@ spring:
     chain:
       strategy:
         content:
-          enabled: true
+          enabled: false
           paths: /**
   datasource:
     url: jdbc:postgresql://localhost:5432/mynah-db
@@ -36,3 +36,6 @@ logging:
               BasicBinder: TRACE
       springframework:
         web: DEBUG
+        security: DEBUG
+        context:
+          properties: DEBUG

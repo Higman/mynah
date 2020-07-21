@@ -1,23 +1,25 @@
 package jp.ac.kagawalab.mynah.web.security;
 
-import jp.ac.kagawalab.mynah.core.config.GoogleOAuth2AuthProvider;
+import jp.ac.kagawalab.mynah.core.oauth2.service.MynahOAuth2UserService;
+import jp.ac.kagawalab.mynah.core.oauth2.service.MynahOidcUserService;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
-import jp.ac.kagawalab.mynah.core.service.oauth2.MynahOAuth2UserService;
-import jp.ac.kagawalab.mynah.core.service.oauth2.MynahOidcUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jp.ac.kagawalab.mynah.web.mapper.UserAuthoritiesMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.Collection;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +32,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/resources/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/favicon*", "/resources/**");
     }
 
     @Override
@@ -38,12 +40,13 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         // ログイン処理の認証ルールを設定
         http.authorizeRequests()
                 /** Auth **/
-                .antMatchers("/", "/login", "/error").permitAll() // 認証なしでアクセス可能なパス
-                .anyRequest().authenticated() // それ以外は認証が必要
+                .antMatchers("/", "/login", "/login?**", "/error").permitAll() // 認証なしでアクセス可能なパス
+                .anyRequest().authenticated()// それ以外は認証が必要
                 .and()
                 /**  OAuthLogin **/
                 .oauth2Login()
                 .userInfoEndpoint()
+                .userAuthoritiesMapper(new UserAuthoritiesMapper())
                 .oidcUserService(oidcUserService())
                 .userService(oAuth2UserService())
                 .and()
@@ -54,8 +57,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 /** Logout **/
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutUrl("/logout")
-                .permitAll();
+                .logoutUrl("/logout").permitAll();
     }
 
     @Bean
@@ -66,15 +68,5 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Bean
     public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
         return new MynahOAuth2UserService(userRepository);
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(googleOAuth2AuthProvider());
-    }
-
-    @Bean
-    public AuthenticationProvider googleOAuth2AuthProvider() {
-        return new GoogleOAuth2AuthProvider();
     }
 }

@@ -1,10 +1,10 @@
-package jp.ac.kagawalab.mynah.core.service.oauth2;
+package jp.ac.kagawalab.mynah.core.oauth2.service;
 
 import jp.ac.kagawalab.mynah.core.dto.mapper.MynahModelMapper;
 import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
 import jp.ac.kagawalab.mynah.core.entity.user.User;
+import jp.ac.kagawalab.mynah.core.oauth2.security.MynahOAuth2User;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
-import jp.ac.kagawalab.mynah.core.security.oauth2.MynahOAuth2User;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

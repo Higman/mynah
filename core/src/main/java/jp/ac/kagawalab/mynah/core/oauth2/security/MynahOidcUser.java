@@ -1,4 +1,4 @@
-package jp.ac.kagawalab.mynah.core.security.oauth2;
+package jp.ac.kagawalab.mynah.core.oauth2.security;
 
 import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -24,7 +24,7 @@ public final class MynahOidcUser extends MynahOAuth2User implements OidcUser, Se
 
     @Override
     public OidcUserInfo getUserInfo() {
-        return oidcUser.getUserInfo();
+        return new OidcUserInfo(oidcUser.getClaims());
     }
 
     @Override
