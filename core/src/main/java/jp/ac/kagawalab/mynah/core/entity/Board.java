@@ -1,4 +1,4 @@
-package jp.ac.kagawalab.mynah.core.entity.board;
+package jp.ac.kagawalab.mynah.core.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,10 +32,12 @@ public class Board implements Serializable {
     @Column(name = "created_at", insertable = false, updatable = false, columnDefinition = "timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Calendar createdAt;
 
+    // 開始日
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_published_from", columnDefinition = "timestamp with time zone NOT NULL")
     private Calendar dataPublishedFrom;
 
+    // 終了日
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_published_to", columnDefinition = "timestamp with time zone NOT NULL")
     private Calendar dataPublishedTo;

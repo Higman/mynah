@@ -1,4 +1,4 @@
-package jp.ac.kagawalab.mynah.core.entity.user;
+package jp.ac.kagawalab.mynah.core.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

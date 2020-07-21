@@ -1,8 +1,8 @@
 package jp.ac.kagawalab.mynah.core.oauth2.service;
 
-import jp.ac.kagawalab.mynah.core.dto.mapper.MynahModelMapper;
+import jp.ac.kagawalab.mynah.core.dto.mapper.DtoModelMapper;
 import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
-import jp.ac.kagawalab.mynah.core.entity.user.User;
+import jp.ac.kagawalab.mynah.core.entity.User;
 import jp.ac.kagawalab.mynah.core.oauth2.security.MynahOAuth2User;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class MynahOAuth2UserService extends DefaultOAuth2UserService {
     private final OAuth2UserUtil oAuth2UserUtil;
 
     @Setter(onMethod=@__({@Autowired}))
-    MynahModelMapper modelMapper;
+    DtoModelMapper modelMapper;
 
     @Autowired
     public MynahOAuth2UserService(UserRepository userRepository, OAuth2UserUtil oAuth2UserUtil) {

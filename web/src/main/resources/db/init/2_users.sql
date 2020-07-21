@@ -1,1 +1,1 @@
-INSERT INTO users (user_id, is_oauth2_user , role_id) VALUES ('aaa', false, 2);
+INSERT INTO users (user_id, user_name, is_oauth2_user , role_id) VALUES ('aaa', 'admin2', false, 2);

@@ -1,8 +1,8 @@
 package jp.ac.kagawalab.mynah.core.oauth2.service;
 
-import jp.ac.kagawalab.mynah.core.dto.mapper.MynahModelMapper;
+import jp.ac.kagawalab.mynah.core.dto.mapper.DtoModelMapper;
 import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
-import jp.ac.kagawalab.mynah.core.entity.user.User;
+import jp.ac.kagawalab.mynah.core.entity.User;
 import jp.ac.kagawalab.mynah.core.oauth2.exception.IllegalEmailDomainException;
 import jp.ac.kagawalab.mynah.core.oauth2.security.MynahOidcUser;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
@@ -22,7 +22,7 @@ public class MynahOidcUserService extends OidcUserService {
     private final OAuth2UserUtil oAuth2UserUtil;
 
     @Setter(onMethod=@__({@Autowired}))
-    private MynahModelMapper modelMapper;
+    private DtoModelMapper modelMapper;
 
     @Setter
     private String[] targetEmailDomains;
@@ -54,7 +54,7 @@ public class MynahOidcUserService extends OidcUserService {
             userId = existedUser.get().getId();
             roleDto = modelMapper.getModelMapper().map(existedUser.get().getRole(), RoleDto.class);
         } else {
-            OAuth2UserUtil.RegisterResult result = oAuth2UserUtil.register(provider, providerId);
+            OAuth2UserUtil.RegisterResult result = oAuth2UserUtil.register(provider, providerId, oidcUser.getFullName());
             userId = result.getId();
             roleDto = result.getRoleDto();
         }

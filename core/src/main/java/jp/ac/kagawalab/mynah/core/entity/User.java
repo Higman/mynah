@@ -1,4 +1,4 @@
-package jp.ac.kagawalab.mynah.core.entity.user;
+package jp.ac.kagawalab.mynah.core.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,6 +24,9 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(nullable = false)
+    private String userName;
 
     @Column(unique = true)
     private String userId;

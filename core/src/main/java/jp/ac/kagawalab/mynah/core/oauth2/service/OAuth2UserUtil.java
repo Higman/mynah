@@ -1,8 +1,8 @@
 package jp.ac.kagawalab.mynah.core.oauth2.service;
 
-import jp.ac.kagawalab.mynah.core.dto.mapper.MynahModelMapper;
+import jp.ac.kagawalab.mynah.core.dto.mapper.DtoModelMapper;
 import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
-import jp.ac.kagawalab.mynah.core.entity.user.User;
+import jp.ac.kagawalab.mynah.core.entity.User;
 import jp.ac.kagawalab.mynah.core.repository.RoleRepository;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
 import lombok.Value;
@@ -19,11 +19,11 @@ public class OAuth2UserUtil {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final MynahModelMapper mapper;
+    private final DtoModelMapper mapper;
     static final int NON_EXISTED_ID = -1;
 
     @Autowired
-    public OAuth2UserUtil(UserRepository userRepository, RoleRepository roleRepository, MynahModelMapper mapper) {
+    public OAuth2UserUtil(UserRepository userRepository, RoleRepository roleRepository, DtoModelMapper mapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.mapper = mapper;
@@ -33,8 +33,9 @@ public class OAuth2UserUtil {
         return Optional.ofNullable(userRepository.findByProviderId(subject));
     }
 
-    RegisterResult register(String provider, String providerId) {
+    RegisterResult register(String provider, String providerId, String userName) {
         User entity = new User()
+                .setUserName(userName)
                 .setProvider(provider)
                 .setProviderId(providerId)
                 .setRole(roleRepository.findByRole(RoleDto.ROLE_USER.toString()))

@@ -57,6 +57,7 @@ project(':web') {
     dependencies {
         implementation project(':core')
 
+        // spring boot
         implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
         implementation 'org.springframework.boot:spring-boot-starter-security'
         implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -76,6 +77,9 @@ project(':web') {
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
         implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
+
+        // others
+        implementation 'org.modelmapper:modelmapper:latest.release'
     }
 }
 

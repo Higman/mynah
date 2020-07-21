@@ -2,20 +2,35 @@
 <html lang="ja"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorator="~{layout/navi}">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" defer ></script>
+    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
 </head>
-    <div layout:fragment="contents">
-        <p th:text="${#authentication.getAuthorities()}"></p>
-        <p></p>
-        <div sec:authorize="hasAuthority('ROLE_ADMIN')">ADMIN</div>
-        <div sec:authorize="hasAuthority('ROLE_USER')">USER</div>
+<div layout:fragment="contents">
+    <div class="container">
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Topic</th>
+                <th>PublishedFrom</th>
+                <th>PublishedTo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board : ${boards}" th:object="${board}">
+                <td class="is-narrow" th:text="${#numbers.formatInteger(board.getNumber(), 2)}"></td>
+                <td><a th:text="*{getTopic()}" th:href="@{/board/show(id=${board.getNumber()})}"></a></td>
+                <td class="is-narrow" th:text="${#calendars.format(board.getDataPublishedFrom(), 'yyyy/MM/dd E  HH:mm:ss')}"></td>
+                <td class="is-narrow" th:text="${#calendars.format(board.getDataPublishedTo(), 'yyyy/MM/dd E  HH:mm:ss')}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+</div>
 </body>
 </html>

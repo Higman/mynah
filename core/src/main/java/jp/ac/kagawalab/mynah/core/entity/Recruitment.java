@@ -1,6 +1,5 @@
-package jp.ac.kagawalab.mynah.core.entity.board;
+package jp.ac.kagawalab.mynah.core.entity;
 
-import jp.ac.kagawalab.mynah.core.entity.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;

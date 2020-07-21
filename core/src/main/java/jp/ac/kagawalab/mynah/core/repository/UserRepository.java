@@ -1,6 +1,6 @@
 package jp.ac.kagawalab.mynah.core.repository;
 
-import jp.ac.kagawalab.mynah.core.entity.user.User;
+import jp.ac.kagawalab.mynah.core.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

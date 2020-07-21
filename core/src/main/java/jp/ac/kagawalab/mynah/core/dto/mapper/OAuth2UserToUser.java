@@ -1,6 +1,6 @@
 package jp.ac.kagawalab.mynah.core.dto.mapper;
 
-import jp.ac.kagawalab.mynah.core.entity.user.User;
+import jp.ac.kagawalab.mynah.core.entity.User;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.security.oauth2.core.user.OAuth2User;
