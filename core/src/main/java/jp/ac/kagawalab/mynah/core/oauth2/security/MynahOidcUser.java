@@ -12,8 +12,8 @@ public final class MynahOidcUser extends MynahOAuth2User implements OidcUser, Se
     private static final long serialVersionUID = -7860492139819186208L;
     private OidcUser oidcUser;
 
-    public MynahOidcUser(int id, String provider, String providerId, RoleDto role, OidcUser oidcUser) {
-        super(id, provider, providerId, role, oidcUser);
+    public MynahOidcUser(int id, String provider, String providerId, RoleDto role, OidcUser oidcUser, String userName) {
+        super(id, provider, providerId, userName, role, oidcUser);
         this.oidcUser = oidcUser;
     }
 

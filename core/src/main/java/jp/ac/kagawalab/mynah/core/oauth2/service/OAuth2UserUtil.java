@@ -41,7 +41,7 @@ public class OAuth2UserUtil {
                 .setRole(roleRepository.findByRole(RoleDto.ROLE_USER.toString()))
                 .setOAuth2User(true);
         User user = userRepository.save(entity);
-        return new RegisterResult(user.getId(), mapper.getModelMapper().map(user.getRole(), RoleDto.class));
+        return new RegisterResult(user.getId(), mapper.getModelMapper().map(user.getRole(), RoleDto.class), user.getUserName());
     }
 
     String getProviderId(OAuth2UserRequest request, OAuth2User user) {
@@ -59,5 +59,6 @@ public class OAuth2UserUtil {
     class RegisterResult {
         int id;
         RoleDto roleDto;
+        String userName;
     }
 }

@@ -36,13 +36,16 @@ public class MynahOAuth2UserService extends DefaultOAuth2UserService {
         int userId;
         RoleDto roleDto = RoleDto.ROLE_USER;
         Optional<User> existedUser = oAuth2UserUtil.getExistedUser(providerId);
+        String userName;
         if (existedUser.isPresent()) {
             userId = existedUser.get().getId();
             roleDto = modelMapper.getModelMapper().map(existedUser.get().getRole(), RoleDto.class);
+            userName = existedUser.get().getUserName();
         } else {
             userId = 0;
+            userName = oAuth2User.getName();
         }
         String clientName = userRequest.getClientRegistration().getClientName();
-        return new MynahOAuth2User(userId, clientName, providerId, roleDto, oAuth2User);
+        return new MynahOAuth2User(userId, clientName, providerId, userName, roleDto, oAuth2User);
     }
 }

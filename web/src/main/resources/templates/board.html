@@ -47,7 +47,7 @@
                         <td class="is-narrow" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
                         <td><a th:text="*{getDetails()}"></a></td>
                         <td class="is-narrow" th:text="${recruitment.getUserName()}"></td>
-                        <td class="is-narrow"> <input type="button" value="Send E-mail"></td>
+                        <td class="is-narrow"> <input type="button" value="Send E-mail" disabled></td>
                     </tr>
                     </tbody>
                 </table>

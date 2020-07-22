@@ -48,16 +48,19 @@ public class MynahOidcUserService extends OidcUserService {
         // すでに登録済みのユーザ情報があるか検索
         int userId;
         RoleDto roleDto = null;
+        String userName;
         String provider = userRequest.getClientRegistration().getClientName();
         Optional<User> existedUser = oAuth2UserUtil.getExistedUser(oidcUser.getSubject());
         if (existedUser.isPresent()) {
             userId = existedUser.get().getId();
             roleDto = modelMapper.getModelMapper().map(existedUser.get().getRole(), RoleDto.class);
+            userName = existedUser.get().getUserName();
         } else {
             OAuth2UserUtil.RegisterResult result = oAuth2UserUtil.register(provider, providerId, oidcUser.getFullName());
             userId = result.getId();
             roleDto = result.getRoleDto();
+            userName = result.getUserName();
         }
-        return new MynahOidcUser(userId, provider, providerId, roleDto, oidcUser);
+        return new MynahOidcUser(userId, provider, providerId, roleDto, oidcUser, userName);
     }
 }

@@ -31,6 +31,8 @@ public class User implements Serializable {
     @Column(unique = true)
     private String userId;
 
+    private String password;
+
     @Column(name = "is_oauth2_user", columnDefinition = "boolean DEFAULT true")
     private boolean isOAuth2User;
 
