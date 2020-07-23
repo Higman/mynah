@@ -33,11 +33,11 @@
                         <span sec:authorize="isAuthenticated()" th:class="'has-text-centered' + ${(#authorization.expression('hasRole(''ADMIN'')') ? ' has-text-info' : '' )}" th:text="${#authentication.principal.getUsername()}"></span>
                     </div>
                     <div class="navbar-item is-2">
-                        <a sec:authorize="!isAuthenticated()" class="button is-primary is-small" href="/login" ><strong>LOGIN</strong></a>
-                        <a sec:authorize="isAuthenticated()" class="button is-danger is-light is-small" href="/logout" ><strong>LOGOUT</strong></a>
+                        <a sec:authorize="!isAuthenticated()" class="button is-primary is-small" href="/login" ><strong>Login</strong></a>
+                        <a sec:authorize="isAuthenticated()" class="button is-danger is-light is-small" href="/logout" ><strong>Logout</strong></a>
                     </div>
                     <div class="navbar-item is-2">
-                        <a sec:authorize="!isAuthenticated()" class="button is-link is-small" href="/admin/login" ><strong>ADMIN LOGIN</strong></a>
+                        <a sec:authorize="!isAuthenticated()" class="button is-link is-small" href="/admin/login" ><strong>Admin Login</strong></a>
                     </div>
                     <div class="navbar-item">
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="jp"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="recruitment-table(recruitmentList, isSendable)" th:remove="tag">
+    <div th:if="${recruitmentList.size() <= 0}">
+        <p class="is-size-5">None</p>
+    </div>
+    <table th:if="${recruitmentList.size() > 0}"
+           class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Detail</th>
+            <th>Recruiter</th>
+            <th>Apply</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="recruitment : ${recruitmentList}" th:object="${recruitment}">
+            <td class="is-narrow" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
+            <td><p th:text="*{getDetails()}"></p></td>
+            <td class="is-narrow is-vcentered" th:text="${recruitment.getUserName()}"></td>
+            <td class="is-narrow">
+                <button class="button is-success is-small"
+                        th:disabled="${(isSendable) ? !recruitment.isRecruiting() : true}"
+                        th:onclick="|window.location.href='@{/}'|">
+                    <span>Send E-mail</span>
+                    <span class="icon is-small">
+                         <i class="fas fa-paper-plane"></i>
+                    </span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

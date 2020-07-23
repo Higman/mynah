@@ -13,44 +13,20 @@
 <body>
     <div layout:fragment="contents">
         <div class="container">
-            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Detail</th>
-                    <th>Recruiter</th>
-                    <th>Apply</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="recruitment : ${board.recruitmentList.?[isRecruiting()]}" th:object="${recruitment}">
-                    <td class="is-narrow" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
-                    <td><a th:text="*{getDetails()}"></a></td>
-                    <td class="is-narrow" th:text="${recruitment.getUserName()}"></td>
-                    <td class="is-narrow"> <input type="button" value="Send E-mail"></td>
-                </tr>
-                </tbody>
-            </table>
-            <details>
+            <h1 class="title" th:text="${board.getTopic()}"></h1>
+            <span class="field" th:with="filteredList=${board.recruitmentList.?[isRecruiting() && recruiterId != __${userId}__]}">
+                <label class="label mt-3">Recruiting</label>
+                <div th:insert="components/recruitment_table::recruitment-table(${filteredList}, true)"></div>
+            </span>
+            <span class="field">
+                <label class="label mt-5">Your recruitment</label>
+                <div th:insert="components/users_recruitment_table::users-recruitment-table(${board.recruitmentList}, ${userId})"></div>
+            </span>
+            <details class="pt-5">
                 <summary>Finished recruiting</summary>
-                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Detail</th>
-                        <th>Recruiter</th>
-                        <th>Apply</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="recruitment : ${board.recruitmentList.?[!isRecruiting()]}" th:object="${recruitment}">
-                        <td class="is-narrow" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
-                        <td><a th:text="*{getDetails()}"></a></td>
-                        <td class="is-narrow" th:text="${recruitment.getUserName()}"></td>
-                        <td class="is-narrow"> <input type="button" value="Send E-mail" disabled></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <span th:with="filteredList=${board.recruitmentList.?[!isRecruiting() && recruiterId != __${userId}__]}">
+                    <div class="pt-3" th:insert="components/recruitment_table::recruitment-table(${filteredList}, true)"></div>
+                </span>
             </details>
         </div>
     </div>

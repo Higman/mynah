@@ -11,7 +11,7 @@ public class RecruitmentToRecruitmentInBoardPage implements Converter<Recruitmen
         Recruitment recruitment = context.getSource();
 
         return new RecruitmentInBoardPage(
-                recruitment.getId(), recruitment.getRecruiter().getUserName(), recruitment.isRecruiting(), recruitment.getDetail()
+                recruitment.getId(), recruitment.getRecruiter().getUserName(), recruitment.getRecruiter().getId(), recruitment.isRecruiting(), recruitment.getDetail()
         );
     }
 }

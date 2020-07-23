@@ -90,6 +90,8 @@ project(':core') {
         implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
         implementation 'org.springframework.security:spring-security-oauth2-core'
         implementation 'org.modelmapper:modelmapper:latest.release'
+//        implementation 'org.hibernate.validator:hibernate-validator'
+//        implementation 'org.glassfish:javax.el:latest.release'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     }
 }

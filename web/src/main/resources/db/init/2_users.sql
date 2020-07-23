@@ -1,1 +1,2 @@
-INSERT INTO users (user_id, user_name, password, is_oauth2_user , role_id) VALUES ('aaa', 'admin1', '$2a$10$K/HY27uKzfPuf2KNM1riCOwTiY0P9Eqpfdqg3wTV53A96IZGRB9.y', false, 1);
+INSERT INTO users (user_id, user_name, password, is_oauth2_user , role_id) VALUES ('admin1', 'admin1', '$2a$10$K/HY27uKzfPuf2KNM1riCOwTiY0P9Eqpfdqg3wTV53A96IZGRB9.y', false, 1);
+INSERT INTO users (user_id, user_name, password, is_oauth2_user , role_id) VALUES ('admin2', 'admin2', '$2a$10$X.WeWi70ZP/F9veweN8bcegP/33lxmuq4TwDPEmu924BYy3vFS5xa', false, 1);

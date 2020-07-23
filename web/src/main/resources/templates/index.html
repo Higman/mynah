@@ -24,7 +24,7 @@
             <tbody>
             <tr th:each="board : ${boards}" th:object="${board}">
                 <td class="is-narrow" th:text="${#numbers.formatInteger(board.getNumber(), 2)}"></td>
-                <td><a th:text="*{getTopic()}" th:href="@{/board/show(id=${board.getNumber()})}"></a></td>
+                <td><a th:text="*{getTopic()}" th:href="@{/board/confirm(id=${board.getNumber()})}"></a></td>
                 <td class="is-narrow" th:text="${#calendars.format(board.getDataPublishedFrom(), 'yyyy/MM/dd E  HH:mm:ss')}"></td>
                 <td class="is-narrow" th:text="${#calendars.format(board.getDataPublishedTo(), 'yyyy/MM/dd E  HH:mm:ss')}"></td>
             </tr>

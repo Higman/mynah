@@ -6,6 +6,7 @@ import lombok.Value;
 public class RecruitmentInBoardPage {
     int id;
     String userName;
+    int recruiterId;
     boolean isRecruiting;
     String details;
 }

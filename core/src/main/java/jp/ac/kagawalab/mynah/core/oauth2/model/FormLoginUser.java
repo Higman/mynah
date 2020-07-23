@@ -5,7 +5,7 @@ import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
 import jp.ac.kagawalab.mynah.core.entity.User;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-public class FormLoginUser extends org.springframework.security.core.userdetails.User {
+public class FormLoginUser extends AbstractMynahUserDetails {
 
     private final User user;
     private final DtoModelMapper modelMapper;
@@ -16,5 +16,15 @@ public class FormLoginUser extends org.springframework.security.core.userdetails
               AuthorityUtils.createAuthorityList(modelMapper.getModelMapper().map(user.getRole(), RoleDto.class).toString()));
         this.user = user;
         this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public int getId() {
+        return this.user.getId();
+    }
+
+    @Override
+    public String getUserName() {
+        return this.user.getUserName();
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FormUserDetailService extends InMemoryUserDetailsManager {
+public class FormUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
     private final DtoModelMapper modelMapper;
 
