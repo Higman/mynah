@@ -22,9 +22,9 @@
         <tbody>
 
         <tr th:each="recruitment : ${recruitmentList}" th:object="${recruitment}">
-            <td class="is-narrow" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
-            <td><p th:text="*{getDetails()}"></p></td>
-            <td class="is-narrow is-vcentered" th:text="${recruitment.getUserName()}"></td>
+            <td class="is-narrow is-vcentered has-text-centered" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
+            <td><p class="is-ccentered" th:text="*{getDetails()}"></p></td>
+            <td class="is-narrow is-vcentered has-text-centered" th:text="${recruitment.getUserName()}"></td>
             <td class="is-narrow">
                 <button class="button is-success is-small"
                         th:disabled="${(isSendable) ? !recruitment.isRecruiting() : true}"

@@ -23,9 +23,9 @@
                 <div th:insert="components/users_recruitment_table::users-recruitment-table(${board.recruitmentList}, ${userId})"></div>
             </span>
             <details class="pt-5">
-                <summary>Finished recruiting</summary>
+                <summary class="mb-3">Finished recruiting</summary>
                 <span th:with="filteredList=${board.recruitmentList.?[!isRecruiting() && recruiterId != __${userId}__]}">
-                    <div class="pt-3" th:insert="components/recruitment_table::recruitment-table(${filteredList}, true)"></div>
+                    <div th:insert="components/recruitment_table::recruitment-table(${filteredList}, false)"></div>
                 </span>
             </details>
         </div>

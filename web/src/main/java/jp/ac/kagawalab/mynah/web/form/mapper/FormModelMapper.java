@@ -8,7 +8,7 @@ public final class FormModelMapper {
     public ModelMapper getModelMapper() {
         ModelMapper mm = new ModelMapper();
         mm.addConverter(new BoardToBoardInIndexPage());
-        mm.addConverter(new BoardToBoardInBoardPage(this));
+        mm.addConverter(new BoardToBoardInGlobalPage(this));
         mm.addConverter(new RecruitmentToRecruitmentInBoardPage());
         mm.addConverter(new UserToUserInIndexPage());
         return mm;

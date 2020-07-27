@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Value
-public class BoardInBoardPage {
+public class BoardInGlobalPage {
     String number;
     String topic;
     Calendar dataPublishedFrom;

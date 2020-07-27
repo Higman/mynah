@@ -23,9 +23,16 @@
             <tbody>
 
             <tr th:each="recruitment : ${usersRecruitmentList}" th:object="${recruitment}">
-                <td class="is-narrow" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
+                <td class="is-narrow is-vcentered has-text-centered" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
                 <td><p th:text="*{getDetails()}"></p></td>
-                <td class="is-narrow"><p th:text="*{isRecruiting()}"></p></td>
+                <td class="is-narrow is-vcentered has-text-centered">
+                    <span th:if="*{isRecruiting()}" class="icon has-text-success">
+                        <i class="fas fa-circle"></i>
+                    </span>
+                    <span th:if="*{!isRecruiting()}" class="icon has-text-danger">
+                        <i class="far fa-times-circle"></i>
+                    </span>
+                </td>
                 <td class="is-narrow"><input class="button is-rounded is-small" type="button" value="Modify" th:href="@{/}"></td>
             </tr>
             </tbody>

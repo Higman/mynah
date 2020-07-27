@@ -1,5 +1,6 @@
 package jp.ac.kagawalab.mynah.web.controller;
 
+import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
 import jp.ac.kagawalab.mynah.core.entity.Board;
 import jp.ac.kagawalab.mynah.core.entity.Recruitment;
 import jp.ac.kagawalab.mynah.core.entity.User;
@@ -8,7 +9,7 @@ import jp.ac.kagawalab.mynah.core.repository.BoardRepository;
 import jp.ac.kagawalab.mynah.core.repository.RecruitmentRepository;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
 import jp.ac.kagawalab.mynah.web.form.mapper.FormModelMapper;
-import jp.ac.kagawalab.mynah.web.form.model.BoardInBoardPage;
+import jp.ac.kagawalab.mynah.web.form.model.BoardInGlobalPage;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,19 +34,27 @@ public class BoardController {
     }
 
     @GetMapping("/board/show")
-    public String showBoardDetail(@AuthenticationPrincipal AbstractMynahUserDetails userDetails, @RequestParam(name = "id") int id, Model model) {
-        Optional<Board> board = boardRepository.findById(id);
-        if (board.isEmpty()) throw new IllegalRequestException("Illegal board id requested: id = " + id);
-        BoardInBoardPage form = modelMapper.getModelMapper().map(board.get(), BoardInBoardPage.class);
+    public String showBoardDetail(@AuthenticationPrincipal AbstractMynahUserDetails userDetails, @RequestParam(name = "board_id") int boardId, Model model) {
+        Optional<Board> board = boardRepository.findById(boardId);
+        if (board.isEmpty()) throw new IllegalRequestException("Illegal board id requested: id = " + boardId);
+        Optional<User> user = userRepository.findById(userDetails.getId());
+        if (user.isEmpty()) throw new IllegalRequestException("Illegal user id requested: id = " + userDetails.getId());
+        List<Recruitment> recruitment = recruitmentRepository.findAllByRecruiter(user.get());
+        model.addAttribute("test", "test");
+        if (recruitment.isEmpty() && user.get().getRole().equals(RoleDto.ROLE_USER)) return "forward:/board/confirm";
+        BoardInGlobalPage form = modelMapper.getModelMapper().map(board.get(), BoardInGlobalPage.class);
         model.addAttribute("board", form);
         model.addAttribute("userId", userDetails.getId());
         return "board";
     }
 
     @GetMapping("/board/confirm")
-    public String confirmRequest(@RequestParam(name = "id") int id, Model model) {
-
-        return "forward:/board/show";
+    public String confirmRequest(@AuthenticationPrincipal AbstractMynahUserDetails userDetails, @RequestParam(name = "board_id") int boardId, Model model) {
+        Optional<Board> board = boardRepository.findById(boardId);
+        if (board.isEmpty()) throw new IllegalRequestException("Illegal board id requested: id = " + boardId);
+        model.addAttribute("board", board);
+        model.addAttribute("userId", userDetails.getId());
+        return "confirm";
     }
 
     static class IllegalRequestException extends RuntimeException {
