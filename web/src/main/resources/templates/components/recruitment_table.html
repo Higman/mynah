@@ -22,7 +22,7 @@
         <tbody>
 
         <tr th:each="recruitment : ${recruitmentList}" th:object="${recruitment}">
-            <td class="is-narrow is-vcentered has-text-centered" th:text="${#numbers.formatInteger(recruitment.getId(), 2)}"></td>
+            <td class="is-narrow is-vcentered has-text-centered" th:text="${#numbers.formatInteger(recruitment.getRegistrationNumberInBoard(), 2)}"></td>
             <td><p class="is-ccentered" th:text="*{getDetails()}"></p></td>
             <td class="is-narrow is-vcentered has-text-centered" th:text="${recruitment.getUserName()}"></td>
             <td class="is-narrow">

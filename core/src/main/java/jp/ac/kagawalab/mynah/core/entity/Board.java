@@ -32,6 +32,9 @@ public class Board implements Serializable {
     @Column(name = "created_at", insertable = false, updatable = false, columnDefinition = "timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private Calendar createdAt;
 
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FormComponent> formComponents;
+
     // 開始日
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_published_from", columnDefinition = "timestamp with time zone NOT NULL")

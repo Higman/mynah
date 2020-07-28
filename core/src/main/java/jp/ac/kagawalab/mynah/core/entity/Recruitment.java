@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,6 +29,9 @@ public class Recruitment implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false, referencedColumnName = "id")
     private Board publisher;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RecruitmentDetail> recruitmentDetails;
 
     @JoinColumn(name = "is_recruiting", columnDefinition = "bool DEFAULT true")
     private boolean isRecruiting;

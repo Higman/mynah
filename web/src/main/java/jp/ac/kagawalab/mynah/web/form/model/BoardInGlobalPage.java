@@ -1,9 +1,5 @@
 package jp.ac.kagawalab.mynah.web.form.model;
 
-import jp.ac.kagawalab.mynah.core.entity.Recruitment;
-import jp.ac.kagawalab.mynah.web.form.mapper.BoardToBoardInIndexPage;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 import java.util.Calendar;
