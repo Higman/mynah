@@ -85,6 +85,7 @@
 <!--/*@thymesVar id="details" type="java.util.List<java.lang.String>"*/-->
 <!--/*@thymesVar id="questions" type="java.util.List<jp.ac.kagawalab.mynah.core.dto.model.FormComponentDto>"*/-->
 <div th:fragment="questions-td(questions, details)" th:remove="tag">
+    <td th:if="${questions.size() <= 0}">None</td>  <!-- もし詳細項がなければ, Noneとのみ表示 -->
     <td th:with="is_check_box=${questions[status.index].getFormType().toString() != 'CHECK_BOX'}" th:class="${(!is_check_box) ? 'is-narrow is-vcentered has-text-centered' : ''}" th:each="det, status : ${details}">
         <p th:if="${is_check_box}" th:text="${det}"></p>
         <div th:if="${!is_check_box}">
