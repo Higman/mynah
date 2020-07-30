@@ -13,4 +13,12 @@ public interface RecruitmentRepository  extends JpaRepository<Recruitment, Integ
     @Query(value = "SELECT (SELECT COUNT(*) + 1 FROM recruitment b WHERE b.created_at < a.created_at) AS number FROM recruitment a WHERE id = ?1.id",
             nativeQuery = true)
     int getRegistrationOrderNumberRaw(Recruitment rec);
+
+    @Query(value = "SELECT * FROM recruitment r, users u WHERE r.user_id = u.id AND u.id = ?1",
+    nativeQuery = true)
+    List<Recruitment> findAllByUserId(int userId);
+
+    @Query(value = "SELECT * FROM recruitment r, users u, boards b WHERE r.user_id = u.id AND u.id = ?1 AND r.board_id = ?2",
+            nativeQuery = true)
+    List<Recruitment> findAllByUserIdAndBoardId(int userId, int boardId);
 }

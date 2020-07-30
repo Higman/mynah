@@ -5,30 +5,34 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<div th:fragment="recruitment-table(recruitmentList, isSendable)" th:remove="tag">
+<!--/*@thymesVar id="board" type="jp.ac.kagawalab.mynah.web.dto.BoardInBoardPage"*/-->
+<!--/*@thymesVar id="recruitmentList" type="java.util.List<jp.ac.kagawalab.mynah.web.dto.RecruitmentInBoardPage>"*/-->
+<!--/*@thymesVar id="isSendable" type="java.lang.Boolean"*/-->
+<div th:fragment="recruitment-table(board, recruitmentList, isSendable)" th:remove="tag">
     <div th:if="${recruitmentList.size() <= 0}">
         <p class="is-size-5">None</p>
     </div>
     <table th:if="${recruitmentList.size() > 0}"
-           class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+           class="table is-bordered is-striped is-hoverable is-fullwidth">
         <thead>
         <tr>
-            <th></th>
-            <th>Detail</th>
-            <th>Recruiter</th>
-            <th>Apply</th>
+            <th rowspan="2"></th>
+            <th th:colspan="${board.questions.size()}">Detail</th>
+            <th rowspan="2">Recruiter</th>
+            <th th:if="${isSendable}" rowspan="2">Apply</th>
+        </tr>
+        <tr>
+            <th th:each="question, status : ${board.questions}" th:text="'Q'+${#numbers.formatInteger(status.index + 1, 2)}">question</th>
         </tr>
         </thead>
         <tbody>
 
         <tr th:each="recruitment : ${recruitmentList}" th:object="${recruitment}">
             <td class="is-narrow is-vcentered has-text-centered" th:text="${#numbers.formatInteger(recruitment.getRegistrationNumberInBoard(), 2)}"></td>
-            <td><p class="is-ccentered" th:text="*{getDetails()}"></p></td>
+            <div th:insert="::questions-td(${board.questions}, ${recruitment.getDetails()})"></div>
             <td class="is-narrow is-vcentered has-text-centered" th:text="${recruitment.getUserName()}"></td>
-            <td class="is-narrow">
-                <button class="button is-success is-small"
-                        th:disabled="${(isSendable) ? !recruitment.isRecruiting() : true}"
-                        th:onclick="|window.location.href='@{/}'|">
+            <td class="is-narrow" th:if="${isSendable}">
+                <button class="button is-success is-small" th:onclick="|window.location.href='@{/}'|">
                     <span>Send E-mail</span>
                     <span class="icon is-small">
                          <i class="fas fa-paper-plane"></i>
@@ -38,6 +42,57 @@
         </tr>
         </tbody>
     </table>
+</div>
+<!--/*@thymesVar id="board" type="jp.ac.kagawalab.mynah.web.dto.BoardInBoardPage"*/-->
+<!--/*@thymesVar id="board" type="java.lang.Integer"*/-->
+<div th:fragment="users-recruitment-table(board, userId)" th:remove="tag">
+    <div th:with="usersRecruitmentList=${board.recruitmentList.?[recruiterId == __${userId}__]}">
+        <div th:if="${usersRecruitmentList.size() <= 0}">
+            <p class="is-size-5">None</p>
+        </div>
+        <table th:if="${usersRecruitmentList.size() > 0}"
+               class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+            <tr>
+                <th rowspan="2"></th>
+                <th th:colspan="${board.questions.size()}">Detail</th>
+                <th rowspan="2">Recruiting</th>
+                <th rowspan="2">Modify</th>
+            </tr>
+            <tr>
+                <th th:each="question, status : ${board.questions}" th:text="'Q'+${#numbers.formatInteger(status.index + 1, 2)}">question</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="recruitment : ${usersRecruitmentList}" th:object="${recruitment}">
+                <td class="is-narrow is-vcentered has-text-centered" th:text="${#numbers.formatInteger(recruitment.getRegistrationNumberInBoard(), 2)}"></td>
+                <div th:insert="::questions-td(${board.questions}, ${recruitment.getDetails()})"></div>
+                <td class="is-narrow is-vcentered has-text-centered">
+                    <span th:if="*{isRecruiting()}" class="icon has-text-success">
+                        <i class="fas fa-circle"></i>
+                    </span>
+                    <span th:if="*{!isRecruiting()}" class="icon has-text-danger">
+                        <i class="far fa-times-circle"></i>
+                    </span>
+                </td>
+                <td class="is-narrow"><input class="button is-rounded is-small" type="button" value="Modify" th:href="@{/}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/*@thymesVar id="details" type="java.util.List<java.lang.String>"*/-->
+<!--/*@thymesVar id="questions" type="java.util.List<jp.ac.kagawalab.mynah.core.dto.model.FormComponentDto>"*/-->
+<div th:fragment="questions-td(questions, details)" th:remove="tag">
+    <td th:with="is_check_box=${questions[status.index].getFormType().toString() != 'CHECK_BOX'}" th:class="${(!is_check_box) ? 'is-narrow is-vcentered has-text-centered' : ''}" th:each="det, status : ${details}">
+        <p th:if="${is_check_box}" th:text="${det}"></p>
+        <div th:if="${!is_check_box}">
+            <span th:class="'icon ' + ${(det == 'true') ? 'has-text-success' : 'has-text-danger' }">
+                <i th:class="'fas ' +  ${(det == 'true') ? 'fa-check' : 'fa-minus'}"></i>
+            </span>
+        </div>
+    </td>
 </div>
 </body>
 </html>

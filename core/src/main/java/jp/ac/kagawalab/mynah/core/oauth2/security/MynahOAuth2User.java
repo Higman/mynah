@@ -56,4 +56,9 @@ public class MynahOAuth2User extends AbstractMynahUserDetails implements OAuth2U
     public String getUserName() {
         return this.userName;
     }
+
+    @Override
+    public RoleDto getRole() {
+        return role;
+    }
 }

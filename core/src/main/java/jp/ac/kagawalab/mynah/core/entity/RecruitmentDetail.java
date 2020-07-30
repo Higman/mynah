@@ -1,9 +1,7 @@
 package jp.ac.kagawalab.mynah.core.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -12,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@Accessors(chain = true)
 @Table(name = "recruitment_details")
 public class RecruitmentDetail {
     @Id

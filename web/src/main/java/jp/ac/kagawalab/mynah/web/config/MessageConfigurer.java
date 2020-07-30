@@ -8,16 +8,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @Configuration
-@ConfigurationProperties(prefix = "i18n.massages")
-public class MassageConfigurer {
+@ConfigurationProperties(prefix = "i18n")
+public class MessageConfigurer {
     @Setter
-    private String[] massages;
+    private String[] messages;
 
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource =
                 new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames(massages);
+        messageSource.setBasenames(messages);
+        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 }

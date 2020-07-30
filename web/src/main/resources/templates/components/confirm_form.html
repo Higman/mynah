@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="jp"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!--/*@thymesVar id="item" type="jp.ac.kagawalab.mynah.core.dto.model.FormComponentDto"*/-->
+<div th:fragment="confirm_item(item)" th:remove="tag">
+    <div class="field">
+        <div class="control" th:if="${item.getFormType().toString()} == 'TEXT'">
+            <div class="label" th:text="${item.getDescribing()}"></div>
+            <input type="input" class="input" th:name="${item.getParamName()}"
+                   th:value="${item.getValue() != null ? item.getValue() : ''}">
+        </div>
+        <div th:if="${item.getFormType().toString()} == 'PULL_DOWN_MENU'">
+            <div class="label" th:text="${item.getDescribing()}"></div>
+            <div class="control has-icons-left">
+                <div class="select">
+                    <select th:name="${item.getParamName()}">
+                        <option th:each="value, status : ${item.getValue().split(',')}" th:value="${status.index}"
+                                th:text="${value.trim()}"></option>
+                    </select>
+                </div>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-list"></i>
+                </span>
+            </div>
+        </div>
+        <div class="control" th:if="${item.getFormType().toString()} == 'CHECK_BOX'">
+            <label class="checkbox">
+                <input type="checkbox" th:name="${item.getParamName()}" th:checked="${item.getValue() == 'true'}" th:text="${'  ' +item.getDescribing()}">
+            </label>
+        </div>
+    </div>
+</div>
+</body>
+</html>

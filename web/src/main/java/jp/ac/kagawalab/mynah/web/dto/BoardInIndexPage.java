@@ -1,4 +1,4 @@
-package jp.ac.kagawalab.mynah.web.form.model;
+package jp.ac.kagawalab.mynah.web.dto;
 
 import lombok.Value;
 

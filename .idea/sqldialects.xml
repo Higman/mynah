@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/docker/init/2_initialize_data.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/web/src/main/resources/db/init/1_static.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/web/src/main/resources/db/init/3_users.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/web/src/main/resources/db/init/5_form.sql" dialect="GenericSQL" />
   </component>
   <component name="SqlResolveMappings">
     <file url="file://$PROJECT_DIR$/web/src/main/resources/db/init/3_users.sql" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />

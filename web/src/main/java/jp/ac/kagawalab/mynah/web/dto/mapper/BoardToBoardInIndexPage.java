@@ -1,7 +1,7 @@
-package jp.ac.kagawalab.mynah.web.form.mapper;
+package jp.ac.kagawalab.mynah.web.dto.mapper;
 
 import jp.ac.kagawalab.mynah.core.entity.Board;
-import jp.ac.kagawalab.mynah.web.form.model.BoardInIndexPage;
+import jp.ac.kagawalab.mynah.web.dto.BoardInIndexPage;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 

@@ -5,7 +5,7 @@ import jp.ac.kagawalab.mynah.core.entity.Role;
 import org.modelmapper.Converter;
 import org.modelmapper.spi.MappingContext;
 
-class RoleToRoleDto implements Converter<Role, RoleDto> {
+class RoleToDto implements Converter<Role, RoleDto> {
     @Override
     public RoleDto convert(MappingContext<Role, RoleDto> context) {
         switch (context.getSource().getRole()) {

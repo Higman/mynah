@@ -1,6 +1,8 @@
-package jp.ac.kagawalab.mynah.web.form.model;
+package jp.ac.kagawalab.mynah.web.dto;
 
 import lombok.Value;
+
+import java.util.List;
 
 @Value
 public class RecruitmentInBoardPage {
@@ -9,5 +11,5 @@ public class RecruitmentInBoardPage {
     int recruiterId;
     int registrationNumberInBoard;  // 登録順位
     boolean isRecruiting;
-    String details;
+    List<String> details;
 }

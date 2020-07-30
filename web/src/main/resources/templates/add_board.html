@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ja"
+<html th:with="lang=${#locale.language}"
+      th:lang="${lang}"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="~{layout/navi}">
 <head>
     <meta charset="UTF-8">
-    <title>Confirm</title>
+    <title>AddBoard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
@@ -13,14 +14,7 @@
 <body>
 <div layout:fragment="contents">
     <div class="container">
-        <p class="title is-2" th:text="#{board.confirm.title}"></p>
-        <p class="subtitle is-4" th:text="${confirmItems.getTopic()}"></p>
-        <form action="/board/recruit" th:action="@{/board/recruit}" method="post">
-        <div th:each="item : ${confirmItems.formComponents}" th:object="${item}">
-            <div class="my-5" th:insert="components/confirm_form::confirm_item(${item})"></div>
-        </div>
-        <input class="button is-link" type="submit" value="submit"/>
-        </form>
+
     </div>
 </div>
 </body>

@@ -1,5 +1,6 @@
 package jp.ac.kagawalab.mynah.core.oauth2.model;
 
+import jp.ac.kagawalab.mynah.core.dto.model.RoleDto;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -11,4 +12,5 @@ public abstract class AbstractMynahUserDetails extends org.springframework.secur
 
     public abstract int getId();
     public abstract String getUserName();
+    public abstract RoleDto getRole();
 }

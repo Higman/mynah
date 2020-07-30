@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja"
+<html th:with="lang=${#locale.language}"
+      th:lang="${lang}"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="~{layout/navi}">
@@ -14,7 +15,7 @@
     <div class="container">
         <form action="/admin/sign_up" th:action="@{'/admin/sign_up'}"  method="post">
             <div class="field">
-                <div class="notification is-danger" th:if="${param.error != null && session['SPRING_SECURITY_LAST_EXCEPTION'] != null}"
+                <div class="notification is-danger" th:if="${param.error}"
                    th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
                     Exception messages
                 </div>
@@ -35,11 +36,7 @@
                 </span>
                 </div>
             </div>
-            <div class="control">
-                <button class="button is-link" type="submit">Login</button>
-            </div>
-            <div class="field">
-            </div>
+            <input class="button is-link" type="submit" value="Login">
         </form>
     </div>
 </div>

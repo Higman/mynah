@@ -1,13 +1,11 @@
 package jp.ac.kagawalab.mynah.web.controller;
 
 import jp.ac.kagawalab.mynah.core.entity.Board;
-import jp.ac.kagawalab.mynah.core.entity.User;
 import jp.ac.kagawalab.mynah.core.oauth2.security.MynahOidcUser;
 import jp.ac.kagawalab.mynah.core.repository.BoardRepository;
 import jp.ac.kagawalab.mynah.core.repository.UserRepository;
-import jp.ac.kagawalab.mynah.web.form.mapper.FormModelMapper;
-import jp.ac.kagawalab.mynah.web.form.model.BoardInIndexPage;
-import jp.ac.kagawalab.mynah.web.form.model.UserInIndexPage;
+import jp.ac.kagawalab.mynah.web.dto.mapper.FormModelMapper;
+import jp.ac.kagawalab.mynah.web.dto.BoardInIndexPage;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

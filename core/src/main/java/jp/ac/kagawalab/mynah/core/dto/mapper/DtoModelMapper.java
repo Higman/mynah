@@ -7,7 +7,10 @@ import org.springframework.stereotype.Component;
 public final class DtoModelMapper {
     public ModelMapper getModelMapper() {
         ModelMapper mm = new ModelMapper();
-        mm.addConverter(new RoleToRoleDto());
+        mm.addConverter(new RoleToDto());
+        mm.addConverter(new StringToRoleDto());
+        mm.addConverter(new FormTypeToDto());
+        mm.addConverter(new FormComponentToDto(this));
         return mm;
     }
 }

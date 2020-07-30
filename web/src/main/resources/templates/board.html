@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="~{layout/navi}">
+<html
+    th:with="lang=${#locale.language}"
+    th:lang="${lang}"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layout/navi}">
 <head>
     <meta charset="UTF-8">
     <title th:text="${board.getTopic()}">Board</title>
@@ -14,18 +16,24 @@
     <div layout:fragment="contents">
         <div class="container">
             <h1 class="title" th:text="${board.getTopic()}"></h1>
+            <table class="table is-bordered is-striped mx-2">
+                <tr th:each=" question, status : ${board.questions}">
+                    <th class="is-narrow is-vcentered has-text-centered" th:text="'Q'+${#numbers.formatInteger(status.index+1, 2)}"></th>
+                    <td th:text="${question.getDescribing()}"></td>
+                </tr>
+            </table>
             <span class="field" th:with="filteredList=${board.recruitmentList.?[isRecruiting() && recruiterId != __${userId}__]}">
                 <label class="label mt-3">Recruiting</label>
-                <div th:insert="components/recruitment_table::recruitment-table(${filteredList}, true)"></div>
+                <div th:insert="components/recruitment_table::recruitment-table(${board}, ${filteredList}, true)"></div>
             </span>
             <span class="field">
                 <label class="label mt-5">Your recruitment</label>
-                <div th:insert="components/users_recruitment_table::users-recruitment-table(${board.recruitmentList}, ${userId})"></div>
+                <div th:insert="components/recruitment_table::users-recruitment-table(${board}, ${userId})"></div>
             </span>
             <details class="pt-5">
                 <summary class="mb-3">Finished recruiting</summary>
                 <span th:with="filteredList=${board.recruitmentList.?[!isRecruiting() && recruiterId != __${userId}__]}">
-                    <div th:insert="components/recruitment_table::recruitment-table(${filteredList}, false)"></div>
+                    <div th:insert="components/recruitment_table::recruitment-table(${board}, ${filteredList}, false)"></div>
                 </span>
             </details>
         </div>

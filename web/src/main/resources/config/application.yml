@@ -15,5 +15,7 @@ spring:
         content:
           enabled: true
           paths: /**
-i18n.massages:
-  - classpath:/messages/form/
+i18n.messages:
+  - classpath:i18n/messages/
+  - classpath:i18n/messages/form
+  - classpath:i18n/messages/form/confirm

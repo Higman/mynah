@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja"
+<html th:with="lang=${#locale.language}"
+      th:lang="${lang}"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="~{layout/navi}">

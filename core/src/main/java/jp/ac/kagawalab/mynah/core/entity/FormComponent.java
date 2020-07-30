@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
+@Accessors(chain = true)
 @Table(name = "form_components")
 public class FormComponent {
     @Id
@@ -22,7 +24,7 @@ public class FormComponent {
     @JoinColumn(name = "type_id", nullable = false, referencedColumnName = "id")
     private FormType type;
 
-    private String defaultValue;
+    private String value;
 
     private String describing;  // 説明項
 
